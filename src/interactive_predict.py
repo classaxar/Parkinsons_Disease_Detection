@@ -20,17 +20,25 @@ def main():
     print("Because Parkinson's diagnosis requires 22 complex voice metrics (like MDVP:Jitter),")
     print("we cannot type them by hand.")
     
-    action = input("\nPress ENTER to pull a random patient's vocal records from our database to test the AI...")
-    
     try:
         df = pd.read_csv(data_path)
     except Exception:
         print(f"Error: Could not find dataset at {data_path}")
         sys.exit(1)
         
-    # Pick a random patient
-    random_index = random.randint(0, len(df)-1)
-    patient = df.iloc[random_index]
+    patient_input = input("\nEnter a specific Patient ID (e.g. phon_R01_S01_1) or press ENTER for a random patient: ").strip()
+    
+    if patient_input == "":
+        # Pick a random patient
+        random_index = random.randint(0, len(df)-1)
+        patient = df.iloc[random_index]
+    else:
+        # Try to find the specific patient
+        matching_patients = df[df['name'] == patient_input]
+        if matching_patients.empty:
+            print(f"Error: Could not find patient '{patient_input}' in the database.")
+            sys.exit(1)
+        patient = matching_patients.iloc[0]
     patient_id = patient['name']
     actual_status = patient['status']
     
