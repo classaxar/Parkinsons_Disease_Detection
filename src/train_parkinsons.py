@@ -74,6 +74,8 @@ best_acc = 0
 best_model_name = ""
 best_pipeline = None
 
+model_accuracies = {}
+
 for name, model in models.items():
     print(f"\nTraining {name}...")
     
@@ -98,8 +100,30 @@ for name, model in models.items():
         best_acc = acc
         best_model_name = name
         best_pipeline = my_pipeline
+        
+    model_accuracies[name] = acc * 100
 
 print(f"\nWINNER: The best model was {best_model_name} with {best_acc*100:.2f}% accuracy!")
+
+# --- 3. Visualize Model Comparison ---
+plt.figure(figsize=(10, 6))
+bars = plt.bar(model_accuracies.keys(), model_accuracies.values(), color='skyblue')
+plt.title('Model Accuracy Comparison - Parkinson\'s Detection')
+plt.xlabel('Classification Models')
+plt.ylabel('Test Accuracy (%)')
+plt.xticks(rotation=45, ha='right')
+plt.ylim(0, 110)
+
+# Add value labels on top of the bars
+for bar in bars:
+    yval = bar.get_height()
+    plt.text(bar.get_x() + bar.get_width()/2, yval + 1, f'{yval:.2f}%', ha='center', va='bottom', fontsize=9)
+
+plt.tight_layout()
+comp_path = os.path.join(BASE_DIR, 'outputs', 'model_comparison.png')
+plt.savefig(comp_path)
+plt.close()
+print(f"Saved model comparison chart to {comp_path}")
 
 # Save the best model for the interactive script
 model_file = os.path.join(BASE_DIR, 'outputs', 'best_parkinsons_model.pkl')
