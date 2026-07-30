@@ -22,7 +22,7 @@ from sklearn.ensemble import RandomForestClassifier, AdaBoostClassifier
 from sklearn.metrics import accuracy_score
 
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-data_path = os.path.join(BASE_DIR, 'data', 'parkinsons.data')
+data_path = os.path.join(BASE_DIR, 'data', 'parkinsons.csv')
 
 print("Loading patient voice data...")
 # Read the dataset provided in the sample folder

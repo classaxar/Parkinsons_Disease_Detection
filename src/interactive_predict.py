@@ -8,7 +8,7 @@ warnings.filterwarnings('ignore') # ignore warnings to keep terminal clean
 
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 model_path = os.path.join(BASE_DIR, 'outputs', 'best_parkinsons_model.pkl')
-data_path = os.path.join(BASE_DIR, 'data', 'parkinsons.data')
+data_path = os.path.join(BASE_DIR, 'data', 'parkinsons.csv')
 
 def main():
     # checking if the model is trained yet
